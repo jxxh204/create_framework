@@ -5,18 +5,20 @@ import ItemFilter from "./components/ItemFilter.js";
 
 import Header from "./components/Header.js"
 
+// const url = 'http://localhost:3000/api/zum';
+// let resultAPI;
+// fetch(url)
+// .then( response => {
+//     console.log(response);
+//     resultAPI = response.json();
+// })
+// .catch( error => console.error('error:', error) );
+
 export default class App extends Component {
   setup () {
-    fetch(
-        '',
-        { method: 'GET' }
-      )
-      .then( response => response.json() )
-      .then( json => console.log(json) )
-      .catch( error => console.error('error:', error) );
-
     this.state = {
       isFilter: 0,
+      menus: [],
       items: [
         {
           seq: 1,
@@ -34,17 +36,12 @@ export default class App extends Component {
 
   template () {//mounted에서 data-component를 끌어다쓴다.
     return `
-        <menu data-component="header"></menu>
+       <menu data-component="header"></menu>
        <header data-component="item-appender"></header>
        <main data-component="items"></main>
        <footer data-component="item-filter"></footer>
     `;
   }
-    // template () {//mounted에서 data-component를 끌어다쓴다.
-    //     return `
-    //      <header data-momponent="header"></header>
-    //     `;
-    //   }
 
   // mounted에서 자식 컴포넌트를 마운트 해줘야 한다.
   mounted () {
@@ -69,7 +66,8 @@ export default class App extends Component {
       filterItem: filterItem.bind(this)
     });
     new Header(header, {
-       addItem: addItem.bind(this) //props로 넘겨줌
+       addItem: addItem.bind(this), //props로 넘겨줌
+       
     })
   }
 
@@ -79,6 +77,7 @@ export default class App extends Component {
       (isFilter === 2 && !active) ||
       isFilter === 0);
   }
+
   //함수를 명시하여 컴포넌트를 사용할 때에는 this.addItem(...)으로 사용한다.
   addItem (contents) {
     const {items} = this.state;
@@ -108,5 +107,4 @@ export default class App extends Component {
   filterItem (isFilter) {
     this.setState({ isFilter });
   }
-
 }
