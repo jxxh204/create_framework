@@ -6,8 +6,8 @@ const { resolve } = require('path')
 
 module.exports = {
   entry: {
-    router: './router.js',
-    app: './index.js'
+    // router: './src/router.js',
+    app: './src/app.js'
   },
 
   output: {

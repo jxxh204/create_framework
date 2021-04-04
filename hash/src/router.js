@@ -1,6 +1,6 @@
 // template
-const homeTemplate = require('./pages/home.hbs')
-const aboutTemplate = require('./pages/about.hbs')
+const homeTemplate = require('./pages/home.js')
+const aboutTemplate = require('./pages/about.js')
 
 const Home = homeTemplate()
 const About = aboutTemplate()
