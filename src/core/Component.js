@@ -1,12 +1,14 @@
+
 export default class Component {
     constructor (target, props) { //생성자 순서대로 실행된다.
-    //   this.getExternalData();
-      this.target = target;
-      this.props = props // react와 같이 부모에서 자식으로 상태 혹은 메소드를 넘겨주기 위해서.
-      this.setup(); // state 설정\
-      this.render();
-      this.setEvent();
+        this.getExternalData();
+        this.target = target;
+        this.props = props // react와 같이 부모에서 자식으로 상태 혹은 메소드를 넘겨주기 위해서.
+        this.setup(); // state 설정\
+        this.render();
+        this.setEvent();
     }
+    getExternalData () {};
     setup () {};
     template () { return ''; }
     mounted () {};
