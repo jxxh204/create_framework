@@ -2,7 +2,11 @@ export default class Router {
     nowPage = '';
   
     constructor({ pages }) {
-      
+      if (window.performance) {
+        if (performance.navigation.type == 1) { // 새로고침  감지
+          window.location="?a=b&c=d";
+        }
+      }
       window.onhashchange = () => {
         this.app = document.getElementById('body');
 
