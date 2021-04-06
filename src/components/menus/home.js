@@ -1,6 +1,6 @@
 import Component from "../../core/Component.js";
 
-export default class Body extends Component {
+export default class Home extends Component {
 
   template() {
     const { filteredItems } = this.props;
@@ -29,7 +29,7 @@ export default class Body extends Component {
     this.addEvent('click', '.toggleBtn', ({target}) => {
       toggleItem(Number(target.closest('[data-seq]').dataset.seq));
     });
-
   }
+  mounted() {}
 
 }

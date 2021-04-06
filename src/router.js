@@ -2,11 +2,10 @@ export default class Router {
     nowPage = '';
   
     constructor({ pages }) {
-      // this.app = this.target.querySelector('[data-component="body"]');
-      this.app = document.getElementById('body');
-      // this.app = 'http://localhost:8080/#App'
-
+      
       window.onhashchange = () => {
+        this.app = document.getElementById('body');
+
         this.pages = pages;
         this.nowPage = window.location.hash.replace('#', '');
         const page = this.pages.find((page) => page.path === this.nowPage); 
@@ -15,7 +14,6 @@ export default class Router {
         const currentPage = new Page({ router: this });
         this.app.innerHTML = ''; // 현재 페이지를 비워주고.
         this.app.innerHTML += currentPage.template(); // 현재 페이지를 넣어준다.
-        console.log(this.app.innerHTML)
         currentPage.mounted();
       };
     }

@@ -1,34 +1,17 @@
 import Component from "./core/Component.js";
-import Body from "./components/containers/Body.js";
-import ItemFilter from "./components/ItemFilter.js";
+import styles from "./css/App.css"
 
-import Header from "./components/Header.js"
+import Footer from "./components/footer.js";
+import Body from "./components/body/body.js"
+import Header from "./components/header/header.js"
 
-import Food from './components/menus/food.js';
-import Ranking from './components/menus/ranking.js';
-import Router from './router.js';
+//menu
 
-const pages = [
-    { page: Food, path: 'food' },
-    { page: Ranking, path: 'ranking' },
-];
-
-// const url = 'http://localhost:3000/api/zum';
-// let resultAPI;
-// fetch(url)
-// .then( response => {
-//     console.log(response);
-//     resultAPI = response.json();
-// })
-// .catch( error => console.error('error:', error) );
-
-//super.x 용법을 통해 부모 class의 property를 호출할 수 있고, 
-//super() 용법을 통해 부모 class의 instance 객체를 생성할 수 있는 것 같다
 export default class App extends Component {
   setup () {
     this.state = {
       isFilter: 0,
-      menus: [],
+    //   menus: [],
       items: [
         {
           seq: 1,
@@ -43,28 +26,21 @@ export default class App extends Component {
       ]
     };
   }
-  getExternalData() {
-    console.log("getExternalData")
-    console.log(window.location.hash, window.location.href)
-
-  }
 
   template () {//mounted에서 data-component를 끌어다쓴다.
-    new Router({ pages });
     return `
        <header data-component="header"></header>
-       <div  id="main"></div>
-       <footer data-component="item-filter"></footer>
+       <main data-component="body" id="body"></main>
+       <footer data-component="footer"></footer>
     `;
-    //data-component="body"
   }
 
   // mounted에서 자식 컴포넌트를 마운트 해줘야 한다.
   mounted () {
     const { filteredItems, addItem, deleteItem, toggleItem, filterItem, pagePush } = this;
-    // const body = this.target.querySelector('[data-component="body"]');
-    const itemFilter = this.target.querySelector('[data-component="item-filter"]');
     const header = this.target.querySelector('[data-component="header"]');
+    const body = this.target.querySelector('[data-component="body"]');
+    const footer = this.target.querySelector('[data-component="footer"]');
 
     // 하나의 객체에서 사용하는 메소드를 넘겨줄 bind를 사용하여 this를 변경하거나,
     // 다음과 같이 새로운 함수를 만들어줘야 한다.
@@ -73,14 +49,15 @@ export default class App extends Component {
         addItem: addItem.bind(this), //props로 넘겨줌
         pagePush: pagePush.bind(this)
      })
-    // new Body(body, {
-    //   filteredItems,
-    //   deleteItem: deleteItem.bind(this),
-    //   toggleItem: toggleItem.bind(this),
-    // });
-    new ItemFilter(itemFilter, {
+    new Body(body, {
+      filteredItems,
+      deleteItem: deleteItem.bind(this),
+      toggleItem: toggleItem.bind(this),
+    });
+    new Footer(footer, {
       filterItem: filterItem.bind(this)
     });
+    console.log('mounted')
   }
 
   get filteredItems () {
