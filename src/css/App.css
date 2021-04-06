@@ -1,11 +1,2 @@
-#menu li{
-    position: relative;
-    float: left;
-    margin-right: 50px;
-}
-#menu li :hover{
-    color: red;
-}
-li {
-    list-style-type: none;
-}
+@import url(./header.css);
+@import url(./body.css);

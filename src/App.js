@@ -2,7 +2,7 @@ import Component from "./core/Component.js";
 import styles from "./css/App.css"
 
 import Footer from "./components/footer.js";
-import Body from "./components/body/body.js"
+import Home from "./components/body/home.js"
 import Header from "./components/header/header.js"
 
 //menu
@@ -30,7 +30,7 @@ export default class App extends Component {
   template () {//mounted에서 data-component를 끌어다쓴다.
     return `
        <header data-component="header"></header>
-       <main data-component="body" id="body"></main>
+       <main data-component="home" id="body"></main>
        <footer data-component="footer"></footer>
     `;
   }
@@ -39,7 +39,7 @@ export default class App extends Component {
   mounted () {
     const { filteredItems, addItem, deleteItem, toggleItem, filterItem, pagePush } = this;
     const header = this.target.querySelector('[data-component="header"]');
-    const body = this.target.querySelector('[data-component="body"]');
+    const home = this.target.querySelector('[data-component="home"]');
     const footer = this.target.querySelector('[data-component="footer"]');
 
     // 하나의 객체에서 사용하는 메소드를 넘겨줄 bind를 사용하여 this를 변경하거나,
@@ -49,7 +49,7 @@ export default class App extends Component {
         addItem: addItem.bind(this), //props로 넘겨줌
         pagePush: pagePush.bind(this)
      })
-    new Body(body, {
+    new Home(home, {
       filteredItems,
       deleteItem: deleteItem.bind(this),
       toggleItem: toggleItem.bind(this),

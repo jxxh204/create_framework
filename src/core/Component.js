@@ -14,14 +14,14 @@ export default class Component {
 
     getAPI () {
         return new Promise((resolve, reject) => {
-            const url = 'http://localhost:3000/api/zum';
-    
-            fetch(url)
+            // const url = 'http://localhost:3300/api/zum';
+            const menuUrl = 'http://localhost:3300/api/menu';
+            fetch(menuUrl)
             .then( res => res.json())
             .then( res => {
-                // console.log("Success", res.menu);
-                this.zumapi = res.menu;
-                resolve(res.menu);
+                console.log("Success", res);
+                this.zumapi = res;
+                resolve(res);
             })
             .catch( error => console.error('error:', error) );
         })

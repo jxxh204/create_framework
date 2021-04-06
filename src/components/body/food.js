@@ -3,9 +3,7 @@ import Component from "../../core/Component.js";
 export default class Food extends Component {
     template() {
         return `
-        <ul>
-            <button class="move">go ranking</button>
-        </ul>
+            <div id="mainScreen">푸드</div>
         `;
     }
     mounte() {
