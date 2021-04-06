@@ -17,8 +17,11 @@ export default class Header extends Component {
         console.log("template",this.props.zumApiItems)
         //${this.state.json[0].map( idx => )}
         return `
+        <top>
+            <div class="logo">JxxH ZUM</div>
+        </top>
         <ul>
-            
+            <li>menu</li>
         </ul>
         `;
     }
