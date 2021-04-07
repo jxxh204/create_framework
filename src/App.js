@@ -3,28 +3,32 @@ import styles from "./css/App.css"
 
 import Footer from "./components/footer.js";
 import Home from "./components/body/home.js"
+import Life from "./components/body/life.js"
+import Food from './components/body/food.js';
 import Header from "./components/header/header.js"
-
 //menu
+import Router from './router.js';
+ 
+const pages = [ //router page
+    { page: Home, path: 'home'},
+    { page: Life, path: 'life' },
+    { page: Food, path: 'food' },
+    // { page: Traval, path: 'traval'},
+    // { page: Culture, path: 'culture'},
+    // { page: Favorites, path: 'favorites'},
+];
+new Router({ pages });
 
 export default class App extends Component {
+
+    first () {}
+
   setup () {
     this.state = {
       isFilter: 0,
-    //   menus: [],
-      items: [
-        {
-          seq: 1,
-          contents: 'item1',
-          active: false,
-        },
-        {
-          seq: 2,
-          contents: 'item2',
-          active: true,
-        }
-      ]
+      header: null
     };
+    // this.componentHtml('menu');
   }
 
   template () {//mounted에서 data-component를 끌어다쓴다.
@@ -34,30 +38,36 @@ export default class App extends Component {
        <footer data-component="footer"></footer>
     `;
   }
+  
+  componentHtml (arg) {
+    const {zumApi} = this;
+    const header = this.target.querySelector('[data-component="header"]');
+    const home = document.getElementsByClassName('home')
+    const life = document.getElementsByClassName('life')
+    const footer = this.target.querySelector('[data-component="footer"]');
+
+    if (arg === 'header') {
+        new Header(header, {
+            addItem: this.addItem.bind(this), //props로 넘겨줌
+            pagePush: this.pagePush.bind(this)
+         })
+         new Footer(footer, {
+            addItem: this.addItem.bind(this)
+        });
+    } else if (arg === 'menu') {
+        new Home(home, {
+            zumApi
+        });
+        new Life(life, {
+            zumApi
+        })
+    }
+    
+  }
 
   // mounted에서 자식 컴포넌트를 마운트 해줘야 한다.
   mounted () {
-    const { filteredItems, addItem, deleteItem, toggleItem, filterItem, pagePush } = this;
-    const header = this.target.querySelector('[data-component="header"]');
-    const home = this.target.querySelector('[data-component="home"]');
-    const footer = this.target.querySelector('[data-component="footer"]');
-
-    // 하나의 객체에서 사용하는 메소드를 넘겨줄 bind를 사용하여 this를 변경하거나,
-    // 다음과 같이 새로운 함수를 만들어줘야 한다.
-    // ex) { addItem: contents => addItem(contents) }
-    new Header(header, {
-        addItem: addItem.bind(this), //props로 넘겨줌
-        pagePush: pagePush.bind(this)
-     })
-    new Home(home, {
-      filteredItems,
-      deleteItem: deleteItem.bind(this),
-      toggleItem: toggleItem.bind(this),
-    });
-    new Footer(footer, {
-      filterItem: filterItem.bind(this)
-    });
-    console.log('mounted')
+    this.componentHtml('header');
   }
 
   get filteredItems () {
@@ -68,6 +78,7 @@ export default class App extends Component {
   }
 
   //함수를 명시하여 컴포넌트를 사용할 때에는 this.addItem(...)으로 사용한다.
+
   addItem (contents) {
     const {items} = this.state;
     const seq = Math.max(0, ...items.map(v => v.seq)) + 1;
@@ -98,5 +109,8 @@ export default class App extends Component {
   }
   pagePush(pageName) {
     window.location.hash = pageName;
+    this.componentHtml('menu');
   }
 }
+
+

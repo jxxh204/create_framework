@@ -1,18 +1,11 @@
 import Component from "../../core/Component.js";
 
-//menu
-import Life from '../../components/body/life.js';
-import Food from '../../components/body/food.js';
-
-import Router from '../../router.js';
-
 export default class Home extends Component {
-    first () {
-        new Router({ pages });
-    }
+
     template() {
+        console.log("home",this.props)
         return `
-            <div id="mainScreen">HOME</div>
+            <div class="home" id="mainScreen">HOME</div>
         `;
     }
     mounte() {
@@ -23,13 +16,3 @@ export default class Home extends Component {
         // });
       }
 }
-
-const pages = [ //router page
-
-    { page: Home, path: 'home'},
-    { page: Life, path: 'life' },
-    { page: Food, path: 'food' },
-    // { page: Traval, path: 'traval'},
-    // { page: Culture, path: 'culture'},
-    // { page: Favorites, path: 'favorites'},
-];

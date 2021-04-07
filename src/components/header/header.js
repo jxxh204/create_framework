@@ -1,30 +1,29 @@
 import Component from "../../core/Component.js";
+import Home from "../body/home.js"
+import Life from "../body/life.js"
 export default class Header extends Component {
 
     setup () {
-        this.state = {
-            menus : []
-        }
     }
 
     template() {
-        console.log("template",this.zumapi[0],this.zumapi)
+        console.log(this.zumApi)
         let menu = []
-         this.zumapi.map((currentValue,idx) => {
+         this.zumMenu.map((currentValue,idx) => {
             menu.push(`
                 <li><a id=${currentValue.id}>${currentValue.menu}</a></li>
             `);
         })
+        
         return `
-
-        <top>
-            <div class="logo">JxxH ZUM</div>
-        </top>
-        <div id="line"></div>
-        <ul id="menu">
-            ${menu.join('')}
-        </ul>
-        <div id="line"></div>
+            <top>
+                <div class="logo">JxxH ZUM</div>
+            </top>
+            <div id="line"></div>
+                <ul id="menu">
+                    ${menu.join('')}
+                </ul>
+            <div id="line"></div>
         `;
     }
     // <li><a id="home">HOME</a></li>
@@ -34,7 +33,18 @@ export default class Header extends Component {
     // <li><a id="culture">컬쳐</a></li>
     // <li><a id="favorites">즐겨찾기</a></li>
     mounted() {
+        const {zumApi} = this;
 
+        const home = document.getElementsByClassName('home')
+        const life = document.getElementsByClassName('life')
+        
+        new Home(home, {
+            zumApi
+        });
+    
+        new Life(life, {
+            zumApi
+        });
     }
     
   setEvent() {

@@ -1,6 +1,7 @@
 .logo { font-size: 20px;}
 
 #menu {
+  position: static;
   margin-bottom: 48px;
 }
 #menu li{
