@@ -35,10 +35,59 @@ export default class App extends Component {
     // this.componentHtml('menu');
   }
 
+    textLengthOverCut(txt, len, lastTxt) {
+        if (len == "" || len == null) { // 기본값
+            len = 20;
+        }
+        if (lastTxt == "" || lastTxt == null) { // 기본값
+            lastTxt = "...";
+        }
+        if (txt.length > len) {
+            txt = txt.substr(0, len) + lastTxt;
+        }
+        return txt;
+    }
+
   template () {//mounted에서 data-component를 끌어다쓴다.
+    let menuContents = [];
+        let sentinel = {};
+
+            for (let i = 1; i < 5; i++) {
+                const saveApi  = this.zumApi[i].contents;
+                try {
+                    saveApi.map((currentValue,idx) => {
+                        // fa.addEventListener('click', (event) => {
+                        //     console.log("click",currentValue,event);
+                        //     localStorage.setItem('favorite', currentValue);
+                        // })
+                        if (idx > 3) { //4줄만 나오도록 . -> 스크롤이벤트로 내리면 더 나오게 만들기.
+                            console.log("Stop",i)
+                            throw sentinel;
+                        }
+                        
+                        menuContents.push(`
+                        <div class="item">
+                            <img src=${currentValue.imageUrl} />
+                            <h4>${currentValue.title}<h4/>
+                            <p>${this.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
+                            <p>${currentValue.mediaName} <span><a id="favorite" >★</a></span><p/>
+                        </div>
+                        `)
+                    
+                    });
+                } catch(e) {
+                    if (e !== sentinel) throw e;
+                }
+            }
     return `
        <header data-component="header"></header>
-       <main data-component="home" id="body"></main>
+       <main data-component="home" id="body">
+        <div class="home" id="mainScreen">HOME</div
+            <div id="mainScreen">HOME</div>
+                <div class="container">
+                ${menuContents.join('')}
+            </div>
+       </main>
        <footer data-component="footer"></footer>
     `;
   }

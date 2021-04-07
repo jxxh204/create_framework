@@ -10,55 +10,73 @@ export default class Header extends Component {
 
     setup () {
     }
+    // getFavorite (arg) {
+    //     console.log(arg)
+    // }
 
     setBodyApi (menu) {
         let menuContents = [];
-        console.log("setBodyApi",menu)
-        const saveApi  = this.zumApi[menu].contents;
+        let sentinel = {};
+        const fa = document.getElementById("favorite");
 
-        // try {
-            saveApi.map((currentValue,idx) => {
-                
-                if (idx > 15) { //4줄만 나오도록 . -> 스크롤이벤트로 내리면 더 나오게 만들기.
-                    console.log("Stop")
-                // throw sentinel;
+        if (menu === 'home') {
+            for (let i = 1; i < 5; i++) {
+                const saveApi  = this.zumApi[i].contents;
+                try {
+                    saveApi.map((currentValue,idx) => {
+                        // fa.addEventListener('click', (event) => {
+                        //     console.log("click",currentValue,event);
+                        //     localStorage.setItem('favorite', currentValue);
+                        // })
+                        if (idx > 3) { //4줄만 나오도록 . -> 스크롤이벤트로 내리면 더 나오게 만들기.
+                            console.log("Stop",i)
+                            throw sentinel;
+                        }
+                        
+                        menuContents.push(`
+                        <div class="item">
+                            <img src=${currentValue.imageUrl} />
+                            <h4>${currentValue.title}<h4/>
+                            <p>${this.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
+                            <p>${currentValue.mediaName} <span><a id="favorite" >★</a></span><p/>
+                        </div>
+                        `)
+                    
+                    });
+                } catch(e) {
+                    if (e !== sentinel) throw e;
                 }
-                menuContents.push(`
-                <div class="item">
-                    <img src=${currentValue.imageUrl} />
-                    <h4>${currentValue.title}<h4/>
-                    <p>${this.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
-                    <p>${currentValue.mediaName}<p/>
-                </div>
-                `);
-            })
-        // } catch(e) {
-        //     if (e !== sentinel) throw e;
-        // }
+            }
+        } else {
+            const saveApi  = this.zumApi[menu].contents;
+            try {
+                saveApi.map((currentValue,idx) => {
+                    if (idx > 15) { //4줄만 나오도록 . -> 스크롤이벤트로 내리면 더 나오게 만들기.
+                        console.log("Stop")
+                    throw sentinel;
+                    }
+                    menuContents.push(`
+                    <div class="item">
+                        <img src=${currentValue.imageUrl} />
+                        <h4>${currentValue.title}<h4/>
+                        <p>${this.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
+                        <p>${currentValue.mediaName} 
+                            <span>
+                                <a id="favorite" >★</a>
+                            </span>
+                        <p/>
+                    </div>
+                    `);
+
+                })
+            } catch(e) {
+                if (e !== sentinel) throw e;
+            }
+        }
         return menuContents;
     }
-    template () {
-        const saveApi  = this.zumApi[1].contents;
 
-        // try {
-            saveApi.map((currentValue,idx) => {
-                
-                if (idx > 15) { //4줄만 나오도록 . -> 스크롤이벤트로 내리면 더 나오게 만들기.
-                    console.log("Stop")
-                // throw sentinel;
-                }
-                contents.push(`
-                <div class="item">
-                    <img src=${currentValue.imageUrl} />
-                    <h4>${currentValue.title}<h4/>
-                    <p>${this.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
-                    <p>${currentValue.mediaName}<p/>
-                </div>
-                `);
-            })
-        // } catch(e) {
-        //     if (e !== sentinel) throw e;
-        // }
+    template () {
 
         let menu = []
          this.zumMenu.map((currentValue,idx) => {
@@ -107,7 +125,8 @@ export default class Header extends Component {
         const culture = document.getElementsByClassName('culture');
 
         new Home(home, {
-            zumApi
+            setBodyApi : setBodyApi.bind(this),
+            textLengthOverCut : textLengthOverCut.bind(this)
         });
 
         new Life(life, {
@@ -135,7 +154,6 @@ export default class Header extends Component {
 
   setEvent() {
     const { pagePush } = this.props;
-
     this.addEvent('click', '#home', ({target}) => {
         pagePush('home');
     });
@@ -153,7 +171,11 @@ export default class Header extends Component {
     this.addEvent('click', '#culture', ({target}) => {
         pagePush('culture');
     });
-    return false;
+
+    // 즐겨찾기
+    // this.addEvent('click', '#favorite', ({target}) => {
+        
+    // })
   }
 
 }

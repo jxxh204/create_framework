@@ -24,7 +24,13 @@
     color: gray;
     font-weight: 200;
 }
-
+.item p span {
+    font-size: 20px;
+    float: right;
+}
+.item p span:hover {
+    color:teal;
+}
 .container {
     width: 100%;
     display: grid;
