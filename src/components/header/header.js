@@ -4,13 +4,62 @@ import Life from "../body/life.js";
 import Food from "../body/food.js";
 import Traval from "../body/traval.js";
 import Culture from "../body/culture.js";
+let contents = [];
+
 export default class Header extends Component {
 
     setup () {
     }
 
-    template() {
-        console.log(this.zumApi)
+    setBodyApi (menu) {
+        let menuContents = [];
+        console.log("setBodyApi",menu)
+        const saveApi  = this.zumApi[menu].contents;
+
+        // try {
+            saveApi.map((currentValue,idx) => {
+                
+                if (idx > 15) { //4줄만 나오도록 . -> 스크롤이벤트로 내리면 더 나오게 만들기.
+                    console.log("Stop")
+                // throw sentinel;
+                }
+                menuContents.push(`
+                <div class="item">
+                    <img src=${currentValue.imageUrl} />
+                    <h4>${currentValue.title}<h4/>
+                    <p>${this.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
+                    <p>${currentValue.mediaName}<p/>
+                </div>
+                `);
+            })
+        // } catch(e) {
+        //     if (e !== sentinel) throw e;
+        // }
+        return menuContents;
+    }
+    template () {
+        const saveApi  = this.zumApi[1].contents;
+
+        // try {
+            saveApi.map((currentValue,idx) => {
+                
+                if (idx > 15) { //4줄만 나오도록 . -> 스크롤이벤트로 내리면 더 나오게 만들기.
+                    console.log("Stop")
+                // throw sentinel;
+                }
+                contents.push(`
+                <div class="item">
+                    <img src=${currentValue.imageUrl} />
+                    <h4>${currentValue.title}<h4/>
+                    <p>${this.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
+                    <p>${currentValue.mediaName}<p/>
+                </div>
+                `);
+            })
+        // } catch(e) {
+        //     if (e !== sentinel) throw e;
+        // }
+
         let menu = []
          this.zumMenu.map((currentValue,idx) => {
             menu.push(`
@@ -49,35 +98,35 @@ export default class Header extends Component {
     }
 
     mounted() {
-        const {zumApi,textLengthOverCut} = this;
+        const {zumApi,textLengthOverCut,setBodyApi} = this;
 
         const home = document.getElementsByClassName('home');
         const life = document.getElementsByClassName('life');
         const food = document.getElementsByClassName('food');
         const traval = document.getElementsByClassName('traval');
         const culture = document.getElementsByClassName('culture');
-            console.log(window.location)
+
         new Home(home, {
             zumApi
         });
-    
+
         new Life(life, {
-            zumApi,
+            setBodyApi : setBodyApi.bind(this),
             textLengthOverCut : textLengthOverCut.bind(this)
         });
-    
+
         new Food(food, {
-            zumApi,
+            setBodyApi : setBodyApi.bind(this),
             textLengthOverCut : textLengthOverCut.bind(this)
         });
     
         new Traval(traval, {
-            zumApi,
+            setBodyApi : setBodyApi.bind(this),
             textLengthOverCut : textLengthOverCut.bind(this)
         });
         
         new Culture(culture, {
-            zumApi,
+            setBodyApi : setBodyApi.bind(this),
             textLengthOverCut : textLengthOverCut.bind(this)
         });
     

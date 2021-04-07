@@ -4,24 +4,12 @@ let saveApi;
 let contents = [];
 export default class Life extends Component {
 
-    setup(props) {
+    setup(props) {}
 
-    }
     template() {
         if (this.props) {
-            saveApi  = this.props.zumApi[1].contents;
-            // saveApi  = this.props.zumApi[1]
-            saveApi.map((currentValue,idx) => {
-                contents.push(`
-                <div class="item">
-                    <img src=${currentValue.imageUrl} />
-                    <h4>${currentValue.title}<h4/>
-                    <p>${this.props.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
-                    <p>${currentValue.mediaName}<p/>
-                </div>
-                `);
-            })
-            // console.log(contents.join(''))
+            contents = this.props.setBodyApi(1);
+            // saveApi  = this.props.zumApi[1].contents;
         }
             return `
             <div id="life">
@@ -31,5 +19,6 @@ export default class Life extends Component {
                 </div>
             </div>
             `;
+
     }
 }

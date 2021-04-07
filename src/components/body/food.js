@@ -1,6 +1,5 @@
 import Component from "../../core/Component.js";
 
-let saveApi;
 let contents = [];
 export default class Food extends Component {
 
@@ -9,17 +8,7 @@ export default class Food extends Component {
     }
     template() {
         if (this.props) {
-            saveApi  = this.props.zumApi[2].contents;
-            saveApi.map((currentValue,idx) => {
-                contents.push(`
-                <div class="item">
-                    <img src=${currentValue.imageUrl} />
-                    <h4>${currentValue.title}<h4/>
-                    <p>${this.props.textLengthOverCut(currentValue.summaryContent, 60, '...')}</p>
-                    <p>${currentValue.mediaName}<p/>
-                </div>
-                `);
-            })
+            contents = this.props.setBodyApi(2);
         }
             return `
             <div id="food">
