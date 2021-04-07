@@ -15,7 +15,6 @@ export default class Router {
         // find : page.path === this.nowPage를 만족하는 제일 첫번째 값을 가져온다.
         const Page = page.page;
         const currentPage = new Page({ router: this });
-        // console.log(currentPage )
         this.app.innerHTML = ''; // 현재 페이지를 비워주고.
         this.app.innerHTML += currentPage.template(); // 현재 페이지를 넣어준다.
         currentPage.mounted();

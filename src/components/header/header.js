@@ -1,6 +1,9 @@
 import Component from "../../core/Component.js";
-import Home from "../body/home.js"
-import Life from "../body/life.js"
+import Home from "../body/home.js";
+import Life from "../body/life.js";
+import Food from "../body/food.js";
+import Traval from "../body/traval.js";
+import Culture from "../body/culture.js";
 export default class Header extends Component {
 
     setup () {
@@ -32,21 +35,55 @@ export default class Header extends Component {
     // <li><a id="traval">여행</a></li>
     // <li><a id="culture">컬쳐</a></li>
     // <li><a id="favorites">즐겨찾기</a></li>
-    mounted() {
-        const {zumApi} = this;
+    textLengthOverCut(txt, len, lastTxt) {
+        if (len == "" || len == null) { // 기본값
+            len = 20;
+        }
+        if (lastTxt == "" || lastTxt == null) { // 기본값
+            lastTxt = "...";
+        }
+        if (txt.length > len) {
+            txt = txt.substr(0, len) + lastTxt;
+        }
+        return txt;
+    }
 
-        const home = document.getElementsByClassName('home')
-        const life = document.getElementsByClassName('life')
-        
+    mounted() {
+        const {zumApi,textLengthOverCut} = this;
+
+        const home = document.getElementsByClassName('home');
+        const life = document.getElementsByClassName('life');
+        const food = document.getElementsByClassName('food');
+        const traval = document.getElementsByClassName('traval');
+        const culture = document.getElementsByClassName('culture');
+            console.log(window.location)
         new Home(home, {
             zumApi
         });
     
         new Life(life, {
-            zumApi
+            zumApi,
+            textLengthOverCut : textLengthOverCut.bind(this)
         });
-    }
     
+        new Food(food, {
+            zumApi,
+            textLengthOverCut : textLengthOverCut.bind(this)
+        });
+    
+        new Traval(traval, {
+            zumApi,
+            textLengthOverCut : textLengthOverCut.bind(this)
+        });
+        
+        new Culture(culture, {
+            zumApi,
+            textLengthOverCut : textLengthOverCut.bind(this)
+        });
+    
+  
+    }
+
   setEvent() {
     const { pagePush } = this.props;
 
@@ -60,6 +97,14 @@ export default class Header extends Component {
     this.addEvent('click', '#food', ({target}) => {
         pagePush('food');
     });
+    this.addEvent('click', '#traval', ({target}) => {
+        pagePush('traval');
+    });
+
+    this.addEvent('click', '#culture', ({target}) => {
+        pagePush('culture');
+    });
+    return false;
   }
 
 }

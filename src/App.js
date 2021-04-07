@@ -2,10 +2,14 @@ import Component from "./core/Component.js";
 import styles from "./css/App.css"
 
 import Footer from "./components/footer.js";
+import Header from "./components/header/header.js"
+
 import Home from "./components/body/home.js"
 import Life from "./components/body/life.js"
 import Food from './components/body/food.js';
-import Header from "./components/header/header.js"
+import Traval from "./components/body/traval.js";
+import Culture from "./components/body/culture.js";
+
 //menu
 import Router from './router.js';
  
@@ -13,8 +17,8 @@ const pages = [ //router page
     { page: Home, path: 'home'},
     { page: Life, path: 'life' },
     { page: Food, path: 'food' },
-    // { page: Traval, path: 'traval'},
-    // { page: Culture, path: 'culture'},
+    { page: Traval, path: 'traval'},
+    { page: Culture, path: 'culture'},
     // { page: Favorites, path: 'favorites'},
 ];
 new Router({ pages });
@@ -38,12 +42,14 @@ export default class App extends Component {
        <footer data-component="footer"></footer>
     `;
   }
-  
+
   componentHtml (arg) {
     const {zumApi} = this;
     const header = this.target.querySelector('[data-component="header"]');
-    const home = document.getElementsByClassName('home')
-    const life = document.getElementsByClassName('life')
+    const home = document.getElementsByClassName('home');
+    const life = document.getElementsByClassName('life');
+    const traval = document.getElementsByClassName('traval');
+    const culture = document.getElementsByClassName('culture');
     const footer = this.target.querySelector('[data-component="footer"]');
 
     if (arg === 'header') {
@@ -59,8 +65,14 @@ export default class App extends Component {
             zumApi
         });
         new Life(life, {
-            zumApi
-        })
+            zumApi,
+        });
+        new Traval(traval, {
+            zumApi,
+        });
+        new Culture(culture, {
+            zumApi,
+        });
     }
     
   }
@@ -91,22 +103,6 @@ export default class App extends Component {
     });
   }
 
-  deleteItem (seq) {
-    const items = [ ...this.state.items ];;
-    items.splice(items.findIndex(v => v.seq === seq), 1);
-    this.setState({items});
-  }
-
-  toggleItem (seq) {
-    const items = [ ...this.state.items ];
-    const index = items.findIndex(v => v.seq === seq);
-    items[index].active = !items[index].active;
-    this.setState({items});
-  }
-
-  filterItem (isFilter) {
-    this.setState({ isFilter });
-  }
   pagePush(pageName) {
     window.location.hash = pageName;
     this.componentHtml('menu');

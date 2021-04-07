@@ -2,14 +2,13 @@ import Component from "../../core/Component.js";
 
 let saveApi;
 let contents = [];
-export default class Life extends Component {
+export default class Traval extends Component {
 
-    setup(props) {
-
-    }
+    setup(props) {}
+    
     template() {
         if (this.props) {
-            saveApi  = this.props.zumApi[1].contents;
+            saveApi  = this.props.zumApi[3].contents;
             // saveApi  = this.props.zumApi[1]
             saveApi.map((currentValue,idx) => {
                 contents.push(`
@@ -24,8 +23,8 @@ export default class Life extends Component {
             // console.log(contents.join(''))
         }
             return `
-            <div id="life">
-                <div id="mainScreen">라이프</div>
+            <div id="traval">
+                <div id="mainScreen">여행</div>
                 <div class="container">
                 ${contents.join('')}
                 </div>
