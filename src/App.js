@@ -9,7 +9,7 @@ import Life from "./components/body/life.js"
 import Food from './components/body/food.js';
 import Traval from "./components/body/traval.js";
 import Culture from "./components/body/culture.js";
-
+aa
 //menu
 import Router from './router.js';
  
