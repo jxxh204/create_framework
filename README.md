@@ -1,8 +1,5 @@
-# ZUM-interview
 
-This is Eastsoft's practical interview project.
-
-vanilla js로 프레임워크를 만들자.
+#vanilla js로 프레임워크를 만들자.
 
 ## 계획 : 컴포넌트화, router, 가상돔, scss, babel을 이용하여 jsx사용
 ### 4/8
