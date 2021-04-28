@@ -45,12 +45,12 @@ export default class Component {
     mounted () {};
     
     async render () {
-        this.zumMenu= await this.getMenu();
-        this.zumApi = await this.getAllApi();
-        if (this.zumApi  && this.zumMenu) {
+        // this.zumMenu= await this.getMenu();
+        // this.zumApi = await this.getAllApi();
+        // if (this.zumApi  && this.zumMenu) {
             this.target.innerHTML = await this.template(); //HTML 렌더링을 하는 구간
             this.mounted();// render 이후 추가적인 기능을 수행하기 위해
-        }
+        // } 
     }
 
     setEvent () {};

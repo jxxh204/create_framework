@@ -52,6 +52,7 @@ export default class App extends Component {
     let menuContents = [];
         let sentinel = {};
 
+        if  (this.zumApi) {
             for (let i = 1; i < 5; i++) {
                 const saveApi  = this.zumApi[i].contents;
                 try {
@@ -79,13 +80,14 @@ export default class App extends Component {
                     if (e !== sentinel) throw e;
                 }
             }
+          }
     return `
        <header data-component="header"></header>
        <main data-component="home" id="body">
         <div class="home" id="mainScreen">HOME</div
             <div id="mainScreen">HOME</div>
                 <div class="container">
-                ${menuContents.join('')}
+                ${this.zumApi ? menuContents.join('') : '<div>서버가 실행중이지 않습니다.</div>'}
             </div>
        </main>
        <footer data-component="footer"></footer>
